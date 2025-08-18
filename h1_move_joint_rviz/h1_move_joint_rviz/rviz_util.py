@@ -73,24 +73,24 @@ START_POSITION = {
 }
 
 JOINTS_NAMES = [
-    "right_hip_roll_joint", 
-    "right_hip_pitch_joint", 
+    "right_hip_roll_joint",
+    "right_hip_pitch_joint",
     "right_knee_joint",
-    "left_hip_roll_joint", 
-    "left_hip_pitch_joint", 
+    "left_hip_roll_joint",
+    "left_hip_pitch_joint",
     "left_knee_joint",
-    "torso_joint", 
-    "left_hip_yaw_joint", 
+    "torso_joint",
+    "left_hip_yaw_joint",
     "right_hip_yaw_joint",
     "left_ankle_joint",
     "right_ankle_joint",
-    "right_shoulder_pitch_joint",  
-    "right_shoulder_roll_joint", 
+    "right_shoulder_pitch_joint",
+    "right_shoulder_roll_joint",
     "right_shoulder_yaw_joint",
     "right_elbow_joint",
     "left_shoulder_pitch_joint",
-    "left_shoulder_roll_joint", 
-    "left_shoulder_yaw_joint", 
+    "left_shoulder_roll_joint",
+    "left_shoulder_yaw_joint",
     "left_elbow_joint",
     "R_pinky_proximal_joint",
     "R_ring_proximal_joint",
@@ -107,6 +107,7 @@ JOINTS_NAMES = [
     "left_hand_joint",
     "right_hand_joint",
 ]
+
 
 def map_range(
     value: float,

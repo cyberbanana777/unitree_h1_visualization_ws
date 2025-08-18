@@ -1,2 +1,10 @@
 ros-foxy-joint-state-publisher
 ros-foxy-joint-state-publisher-gui
+ros-foxy-urdf
+ros-foxy-xacro
+ros-foxy-rviz2
+ros-foxy-gazebo-ros-pkgs
+ros-foxy-robot-state-publisher
+ros-foxy-joint-state-publisher
+ros-foxy-joint-state-publisher-gui
+ros-foxy-tf2-ros

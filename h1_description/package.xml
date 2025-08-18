@@ -12,6 +12,7 @@
   <depend>rviz2</depend>
   <depend>gazebo_ros_pkgs</depend>
   <depend>robot_state_publisher</depend>
+  <depend>joint_state_publisher</depend>
   <depend>joint_state_publisher_gui</depend>
   <depend>tf2_ros</depend>
 

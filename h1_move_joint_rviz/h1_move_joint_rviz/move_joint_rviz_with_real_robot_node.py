@@ -10,20 +10,23 @@ RViz. Агрегирует данные из трех источников: ни
 unitree_go, sensor_msgs, аппаратные лимиты суставов.
 
 ANNOTATION
-ROS 2 node for converting and publishing Unitree H1 joint states to RViz. 
+ROS 2 node for converting and publishing Unitree H1 joint states to RViz.
 Aggregates data from three sources: low-level states (LowState), fingers
 (Inspire) and wrists. Key dependencies: ROS 2 Humble, unitree_go, sensor_msgs,
 hardware joint limits.
 '''
 
-from unitree_go.msg import MotorStates
-from unitree_go.msg import LowState
-from sensor_msgs.msg import JointState
-from rclpy.node import Node
 import rclpy
 from h1_info_library import LIMITS_OF_JOINTS_WITH_HANDS_FROM_VENDOR
+from rclpy.node import Node
+from sensor_msgs.msg import JointState
+from unitree_go.msg import LowState, MotorStates
+
 from h1_move_joint_rviz import (
-    LIMITS_URDF, START_POSITION, JOINTS_NAMES, map_range
+    JOINTS_NAMES,
+    LIMITS_URDF,
+    START_POSITION,
+    map_range,
 )
 
 # Frequency in Hz for the node
@@ -40,35 +43,29 @@ class MoveJointRvizNode(Node):
 
         # current position
         self.current_jpos_H1 = START_POSITION.copy()
-    
 
         self.control_dt = 1 / FREQUENCY
 
         self.subscription_lowstate = self.create_subscription(
-            LowState,
-            'lowstate',
-            self.listener_callback_lowstate,
-            10
+            LowState, 'lowstate', self.listener_callback_lowstate, 10
         )
 
         self.subscription_state = self.create_subscription(
             MotorStates,
             'inspire/state',
             self.listener_callback_inspire_states,
-            10
+            10,
         )
 
         self.subscription_wrist_state = self.create_subscription(
             MotorStates,
             'wrist/states',
             self.listener_callback_wrist_states,
-            10
+            10,
         )
 
         self.publisher_joint_state = self.create_publisher(
-            JointState,
-            'joint_states', 
-            10
+            JointState, 'joint_states', 10
         )
 
         self.timer = self.create_timer(self.control_dt, self.timer_callback)
@@ -78,9 +75,9 @@ class MoveJointRvizNode(Node):
         msg.header.stamp = self.get_clock().now().to_msg()
         msg.header.frame_id = "pelvis"
         msg.name = JOINTS_NAMES.copy()
-        
+
         h1_positions = []
-        
+
         for i in range(len(self.current_jpos_H1)):
             if i != 9:
                 orig_lim = LIMITS_OF_JOINTS_WITH_HANDS_FROM_VENDOR[i]
@@ -93,7 +90,7 @@ class MoveJointRvizNode(Node):
                     rviz_lim[1],
                 )
                 h1_positions.append(converted_value)
-        
+
         msg.position = h1_positions
 
         self.publisher_joint_state.publish(msg)

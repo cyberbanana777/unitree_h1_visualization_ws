@@ -16,13 +16,18 @@ Key dependencies: ROS 2 Humble, sensor_msgs, rclpy, hardware joint limits.
 '''
 
 import json
-from sensor_msgs.msg import JointState
-from std_msgs.msg import String
-from rclpy.node import Node
+
 import rclpy
 from h1_info_library import LIMITS_OF_JOINTS_WITH_HANDS_FROM_VENDOR
+from rclpy.node import Node
+from sensor_msgs.msg import JointState
+from std_msgs.msg import String
+
 from h1_move_joint_rviz import (
-    LIMITS_URDF, START_POSITION, JOINTS_NAMES, map_range
+    JOINTS_NAMES,
+    LIMITS_URDF,
+    START_POSITION,
+    map_range,
 )
 
 # Frequency in Hz for the node
@@ -47,20 +52,18 @@ class MoveJointRvizNode(Node):
             String,
             'positions_to_unitree',
             self.listener_callback_positions_to_unitree,
-            10
+            10,
         )
 
         self.publisher_joint_state = self.create_publisher(
-            JointState,
-            'joint_states', 
-            10
+            JointState, 'joint_states', 10
         )
 
         self.timer = self.create_timer(self.control_dt, self.timer_callback)
 
     def listener_callback_positions_to_unitree(self, msg):
         """
-        Process incoming position commands from the 'positions_to_unitree' 
+        Process incoming position commands from the 'positions_to_unitree'
         topic. Message format should be: JSON_POSITIONS$IMPACT_VALUE
         """
         raw_data = msg.data
@@ -89,7 +92,6 @@ class MoveJointRvizNode(Node):
                 else:
                     self.current_jpos_H1[i] = float(impact_part)
 
-
         except json.JSONDecodeError as e:
             self.get_logger().error(f"JSON decode error: {e}")
         except Exception as e:
@@ -100,9 +102,9 @@ class MoveJointRvizNode(Node):
         msg.header.stamp = self.get_clock().now().to_msg()
         msg.header.frame_id = "pelvis"
         msg.name = JOINTS_NAMES.copy()
-        
+
         h1_positions = []
-        
+
         for i in range(len(self.current_jpos_H1)):
             if i != 9:
                 orig_lim = LIMITS_OF_JOINTS_WITH_HANDS_FROM_VENDOR[i]
@@ -115,7 +117,7 @@ class MoveJointRvizNode(Node):
                     rviz_lim[1],
                 )
                 h1_positions.append(converted_value)
-        
+
         msg.position = h1_positions
 
         self.publisher_joint_state.publish(msg)

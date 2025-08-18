@@ -3,11 +3,13 @@
 # Details in the LICENSE file in the root of the package.
 
 import os
+
+from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription
-from launch_ros.actions import Node
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from ament_index_python.packages import get_package_share_directory
+from launch_ros.actions import Node
+
 
 def generate_launch_description():
     # Get the paths to the launch files of other packages
@@ -24,10 +26,12 @@ def generate_launch_description():
 
     move_node = Node(
         package='h1_move_joint_rviz',
-        executable='move_joint_rviz_without_real_robot_node'
+        executable='move_joint_rviz_without_real_robot_node',
     )
 
-    return LaunchDescription([
-        launch_file1,
-        move_node,
-    ])
+    return LaunchDescription(
+        [
+            launch_file1,
+            move_node,
+        ]
+    )
