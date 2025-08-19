@@ -32,12 +32,10 @@ def generate_launch_description():
         PythonLaunchDescriptionSource(launch_rviz_file)
     )
 
-    gui_node = (
-        Node(
+    gui_node = Node(
             package='joint_state_publisher_gui',
             executable='joint_state_publisher_gui',
             name='joint_state_publisher_gui',
-        ),
     )
 
     return LaunchDescription(
