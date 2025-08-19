@@ -1,9 +1,9 @@
 # unitree_h1_visualization_ws
 
 В данном репозитории лежат ROS2-пакеты, необходимые для визуализации движений робота Unitree H1.
-Пакты которые задают даижения робота см. [meta_launch_ws](https://github.com/cyberbanana777/unitree_h1_meta_launch_ws?tab=readme-ov-file#-какие-репозитории-установить).
+Пакты которые задают движения робота см. [meta_launch_ws](https://github.com/cyberbanana777/unitree_h1_meta_launch_ws?tab=readme-ov-file#-какие-репозитории-установить).
 
-## Оглавление
+## 🔖  Оглавление
 
 1. [📦 Содержание репозитория](#-содержание-репозитория)
 2. [🚀 Быстрый старт](#-быстрый-старт)
@@ -13,12 +13,12 @@
    - 4.2 [Запуск launch-файлов](#запуск-launch-файлов)
 5. [📚 Кастомные библиотеки](#-кастомные-библиотеки)
    - 5.1 [`rviz_util.py`](#rviz_utilpy)
-6. [📡 Интерфейсы](#-интерфейсы)
-   - 6.1 [Пакет `h1_description`](#пакет-h1_description)
-   - 6.2 [Пакет `h1_move_joint_rviz`](#пакет-h1_move_joint_rviz)
+6. [📡 Интерфейсы](#-интерфейсы-топики-сервисы-действия-параметры)
+   - 6.1 [Пакет `h1_description`](#пакет-1-h1_description)
+   - 6.2 [Пакет `h1_move_joint_rviz`](#пакет-2-h1_move_joint_rviz)
 7. [🗺️ Архитектура](#️-архитектура)
-   - 7.1 [Пакет `h1_description`](#пакет-h1_description-1)
-   - 7.2 [Пакет `completed_scripts_visualization`](#пакет-completed_scripts_visualization)
+   - 7.1 [`h1_description`](#h1_description-1)
+   - 7.2 [`completed_scripts_visualization`](#completed_scripts_visualization)
 8. [📜 Лицензия](#-лицензия)
 9. [🙏 Благодарности](#-благодарности)
 10. [💡 Предложения и корректировки](#-предложения-и-корректировки)
@@ -35,7 +35,7 @@
 *   **`README.md`**: Этот файл.
 *   **`install_dependensies.bash`** - Bash-скрипт,  при запуске которого устанавливаются все необходимые python-зависимости через pip.
 
-<p align="right" style="margin-top: 20px;"><a href="#оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
+<p align="right" style="margin-top: 20px;"><a href="#-оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
 
 ## 🚀 Быстрый старт
 Пошаговая инструкция для **быстрого** запуска основной функциональности. Предполагаем, что ROS2 (Foxy) уже установлен.
@@ -86,7 +86,7 @@ ros2 launch completed_scripts_visualization show_and_move_h1_without_real_robot_
 ```
 Launch-файлы, которые запускают всю систему целиком смотри в [unitree_h1_meta_launch_ws](https://github.com/cyberbanana777/unitree_h1_meta_launch_ws?tab=readme-ov-file#%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D0%BA-launch-%D1%84%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2)
 
-<p align="right" style="margin-top: 20px;"><a href="#оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
+<p align="right" style="margin-top: 20px;"><a href="#-оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
 
 ## ⚙️ Предварительные требования
 
@@ -95,7 +95,7 @@ Launch-файлы, которые запускают всю систему це�
 *   **Поддерживаемые платформы:** Ubuntu 20.04
 *   **Ключевые ROS2 пакеты:** `rclpy`, `std_msgs`, `sensor_msgs`, `unitree_go`, `h1_info_library` `robot_state_publisher`, `joint_state_publisher`, `joint_state_publisher_gui`, `rviz2`, `xarco`, `urdf`, `gazebo_ros_pkgs`, `tf2_ros`
 
-<p align="right" style="margin-top: 20px;"><a href="#оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
+<p align="right" style="margin-top: 20px;"><a href="#-оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
 
 ## 🧪 Использование
 
@@ -104,7 +104,7 @@ Launch-файлы, которые запускают всю систему це�
 ### **Запуск узлов:**
 #### **h1_description**
 Узлы отсутствуют
-#### **h1_move_joint_rviz**#
+#### **h1_move_joint_rviz**
 ##### Нода для визуализации целевых движений (можно без робота)
 ```bash
 ros2 run h1_move_joint_rviz move_joint_rviz_without_real_robot_node
@@ -114,9 +114,9 @@ ros2 run h1_move_joint_rviz move_joint_rviz_without_real_robot_node
 ros2 run h1_move_joint_rviz move_joint_rviz_with_real_robot_node
 ```
 
-<p align="right" style="margin-top: 20px;"><a href="#оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
+<p align="right" style="margin-top: 20px;"><a href="#-оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
 
-### **Запуск Launch файлов:**
+### **Запуск launch-файлов:**
 #### Пакет `h1_description`
 ##### Запуск Rviz2 (визуализатор) с настроенной конфигурацией
 ```bash
@@ -124,7 +124,7 @@ ros2 launch h1_description
 rviz_with_config_launch.py
 ```
 **Запускаемые ноды** (в формате `пакет -> зависимость`, `пакет => launch-файл`):
-- `rviz2 -> rviz2
+- `rviz2 -> rviz2`
 ##### Запуск публикации описания робота и TF-преобразования `base_footprint -> pelvis`
 В контексте описания робота, фрейм `pelvis` является аналогом стандартного `base_link`.
 ```bash
@@ -171,9 +171,9 @@ ros2 launch completed_scripts_visualization show_and_move_h1_without_real_robot_
 - `h1_description => display_without_control_launch.py`
 - `h1_move_joint_rviz -> move_joint_rviz_without_real_robot_node`
 
-<p align="right" style="margin-top: 20px;"><a href="#оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
+<p align="right" style="margin-top: 20px;"><a href="#-оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
 
-## Кастомные библиотеки
+## 📚 Кастомные библиотеки
 ### **`h1_move_joint_rviz/rviz_util.py`**
 Пакет `h1_move_joint_rviz` содержит не только ноды, но и мини-библиотеку, которая состоит из 1 файла - `rviz_util.py`.
 В этом модуле содержится код, который используется в обоих нодах этого пакета. 
@@ -190,11 +190,11 @@ ros2 launch completed_scripts_visualization show_and_move_h1_without_real_robot_
 	- `out_max` - наибольшее значение в 2-ом диапазоне
 	Возвращаеет значение из 2-го диапазона.
 
-<p align="right" style="margin-top: 20px;"><a href="#оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
+<p align="right" style="margin-top: 20px;"><a href="#-оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
 
-## 📡 Интерфейс (топики, сервисы, действия, параметры)
+## 📡 Интерфейсы (топики, сервисы, действия, параметры)
 Спецификация API пакетов.
-### **Пакет 1: `h1_descroption`**
+### **Пакет 1: `h1_description`**
 Узлы отсутствуют.
 Но в launch-файлах присутствуют ноды, которые установлены через apt-пакеты. Вот их список (формат `package -> executable`). Подробнее о их функционале читайте в интернете.
 - `robot_state_publisher -> robot_state_publisher`
@@ -206,7 +206,7 @@ ros2 launch completed_scripts_visualization show_and_move_h1_without_real_robot_
 | :--------- | :--------------- | :-------------------- | :------------------------------------------------------------------------------------------------- |
 > Возможно, здесь появится инфа про эти ноды... 😉
 
-<p align="right" style="margin-top: 20px;"><a href="#оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
+<p align="right" style="margin-top: 20px;"><a href="#-оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
 
 ### **Пакет 2: `h1_move_joint_rviz`**
 #### **Узел: `move_joint_rviz_without_real_robot_node`**
@@ -217,7 +217,8 @@ ros2 launch completed_scripts_visualization show_and_move_h1_without_real_robot_
 | Публикация | `/joint_states`         | `sensors_msgs/msg/JointState` | Угловые положения суставов Unitree H1 для визуализации в rviz2                        |
 | Подписка   | `/positions_to_unitree` | `std_msgs/msg/String`         | Целевые положения суставов Unitree H1 в допустимом диапазоне для Unitree H1 |
 
-<p align="right" style="margin-top: 20px;"><a href="#оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
+<p align="right" style="margin-top: 20px;"><a href="#-оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
+
 #### **Узел: `move_joint_rviz_without_real_robot_node`**
 - **Рабочие топики:**
 
@@ -228,41 +229,47 @@ ros2 launch completed_scripts_visualization show_and_move_h1_without_real_robot_
 | Подписка<br> | `/inspire/state` | `unitree_go/msg/MotorStates`     | Степень разжатия пальцев `Inspire Hands` в условных единицах от 0 до 1 |
 | Подписка<br> | `/lowstate`      | `unitree_go/msg/LowState`        | Состояния суставов робота `Unitree H1`                                 |
 
-<p align="right" style="margin-top: 20px;"><a href="#оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
+<p align="right" style="margin-top: 20px;"><a href="#-оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
 
 ## 🗺️ Архитектура 
 Здесь представлены скрины из rqt_graph при различных запущенных сценариях.
 ### `h1_description`
 #### `rviz_with_config_launch.py` 
-> Здесь будет картинка
-#### `robot_description_and_tfs_launch.py`
-> Здесь будет картинка
-#### `display_with_control_launch.py`
-> Здесь будет картинка
-#### `display_without_control_launch.py`
-> Здесь будет картинка
+![rviz_with_config_launch](docs/rviz_with_config_launch.png)
 
-<p align="right" style="margin-top: 20px;"><a href="#оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
+#### `robot_description_and_tfs_launch.py`
+![robot_description_and_tfs_launch](docs/robot_description_and_tfs_launch.png)
+
+#### `display_with_control_launch.py`
+![display_with_control_launch](docs/display_with_control_launch.png)
+
+#### `display_without_control_launch.py`
+![display_without_control_launch](docs/display_without_control_launch.png)
+
+<p align="right" style="margin-top: 20px;"><a href="#-оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
 
 ### `completed_scripts_visualization`
 ##### `show_and_move_h1_with_real_robot_launch.py`
-> Здесь будет картинка
-##### `show_and_move_h1_without_real_robot_launch.py`
-> Здесь будет картинка
-<p align="right" style="margin-top: 20px;"><a href="#оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
+![show_and_move_h1_with_real_robot_launch](docs/show_and_move_h1_with_real_robot_launch.png)
 
-## Лицензия
+##### `show_and_move_h1_without_real_robot_launch.py`
+![show_and_move_h1_without_real_robot_launch](docs/show_and_move_h1_without_real_robot_launch.png)
+
+<p align="right" style="margin-top: 20px;"><a href="#-оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
+
+## 📜 Лицензия
 Copyright (c) 2025 Алиса Зенина и Александр Грачев РТУ МИРЭА (Россия)
 
 Данное программное обеспечение распространяется под [лицензией MIT](LICENSE).  
 Разрешается свободное использование, копирование, модификация и распространение при условии сохранения уведомления об авторских правах и текста лицензии.
 
-## Благодарности
+## 🙏 Благодарности
 - Часть кода (пакет `h1_description`) основана на [Unitree Robotics](https://github.com/unitreerobotics/unitree_ros?tab=readme-ov-file) ([BSD 3-Clause](h1_description/LICENSE-ORIGINAL)).  
 **Благодарим всех, кто косвенно участвовал в разработке.**
-<p align="right" style="margin-top: 20px;"><a href="#оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
 
-## Предложения и корректировки
+<p align="right" style="margin-top: 20px;"><a href="#-оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
+
+## 💡 Предложения и корректировки
 Если Вы нашли, ошибку, неточность, у Вас есть предложения по улучшению или вопросы, то напишите в телеграмм [сюда](https://t.me/Alex_19846) (Александр) или [сюда](https://t.me/Kika_01) (Алиса).
 
-<p align="right" style="margin-top: 20px;"><a href="#оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
+<p align="right" style="margin-top: 20px;"><a href="#-оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
