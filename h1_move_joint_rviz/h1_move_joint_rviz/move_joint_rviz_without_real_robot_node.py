@@ -84,18 +84,20 @@ class MoveJointRvizNode(Node):
             return
 
         # Process position data
-        try:
-            pose = json.loads(data_part)
-            for i in range(len(pose) + 1):
-                if i != 9:
-                    self.current_jpos_H1[i] = pose[str(i)]
-                else:
-                    self.current_jpos_H1[i] = float(impact_part)
+        # try:
+        pose = json.loads(data_part)
+        for i in range(len(pose) + 1):
+            if i == 6:
+                continue
+            if i != 9:
+                self.current_jpos_H1[i] = pose[str(i)]
+            else:
+                self.current_jpos_H1[i] = float(impact_part)
 
-        except json.JSONDecodeError as e:
-            self.get_logger().error(f"JSON decode error: {e}")
-        except Exception as e:
-            self.get_logger().error(f"Unexpected error: {e}")
+        # except json.JSONDecodeError as e:
+        #     self.get_logger().error(f"JSON decode error: {e}")
+        # except Exception as e:
+        #     self.get_logger().error(f"Unexpected error: {e}")
 
     def timer_callback(self):
         msg = JointState()
@@ -133,9 +135,6 @@ def main(args=None):
 
     except KeyboardInterrupt:
         node.get_logger().info('Stop node.')
-
-    except Exception as e:
-        node.get_logger().error(e)
 
     finally:
         node.get_logger().info('Node stoped.')
