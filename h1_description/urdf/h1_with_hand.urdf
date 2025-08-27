@@ -1,4 +1,11 @@
-<!-- Copyright (c) 2016-2022 HangZhou YuShu TECHNOLOGY CO.,LTD. ("Unitree Robotics") -->
+<!-- 
+Copyright (c) 2016-2022 HangZhou YuShu TECHNOLOGY CO.,LTD. ("Unitree Robotics")
+Modified by Alice Zenina and Alexander Grachev RTU MIREA (Russia)
+
+Copyright (c) 2025 Alice Zenina and Alexander Grachev RTU MIREA (Russia)
+SPDX-License-Identifier: MIT
+Details in the LICENSE file in the root of the package.
+-->
 
 <robot
   name="h1">
@@ -2659,6 +2666,20 @@
       multiplier="1"
       offset="0" />
   </joint>
+
+  <link name="imu_link"></link>
+  <joint
+    name="imu_joint"
+    type="fixed">
+    <origin
+      xyz="-0.04452 -0.01891 0.27756"
+      rpy="0 0 0" />
+    <parent
+      link="torso_link" />
+    <child
+      link="imu_link" />
+  </joint>
+
   <link
     name="logo_link">
     <visual>

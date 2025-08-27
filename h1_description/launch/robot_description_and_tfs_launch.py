@@ -16,6 +16,7 @@ from launch_ros.actions import Node
 def generate_launch_description():
     pkg_path = get_package_share_directory('h1_description')
     urdf_file = os.path.join(pkg_path, 'urdf', 'h1_with_hand.urdf')
+    urdf_file = os.path.join(pkg_path, 'urdf', 'h1.urdf')
 
     return LaunchDescription(
         [
