@@ -1,5 +1,3 @@
-# Copyright (c) 2016-2022 HangZhou YuShu TECHNOLOGY CO.,LTD. ("Unitree Robotics")
-
 Panels:
   - Class: rviz_common/Displays
     Help Height: 78
@@ -69,137 +67,7 @@ Visualization Manager:
         Expand Joint Details: false
         Expand Link Details: false
         Expand Tree: false
-        L_hand_base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        L_index_intermediate:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        L_index_proximal:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        L_middle_intermediate:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        L_middle_proximal:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        L_pinky_intermediate:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        L_pinky_proximal:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        L_ring_intermediate:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        L_ring_proximal:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        L_thumb_distal:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        L_thumb_intermediate:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        L_thumb_proximal:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        L_thumb_proximal_base:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         Link Tree Style: Links in Alphabetic Order
-        R_hand_base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        R_index_intermediate:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        R_index_proximal:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        R_middle_intermediate:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        R_middle_proximal:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        R_pinky_intermediate:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        R_pinky_proximal:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        R_ring_intermediate:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        R_ring_proximal:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        R_thumb_distal:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        R_thumb_intermediate:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        R_thumb_proximal:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        R_thumb_proximal_base:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         d435_left_imager_link:
           Alpha: 1
           Show Axes: false
@@ -210,17 +78,16 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        imu_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
         left_ankle_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
         left_elbow_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_hand_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -281,11 +148,6 @@ Visualization Manager:
           Show Trail: false
           Value: true
         right_elbow_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_hand_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -340,69 +202,17 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
-        L_hand_base_link:
-          Value: true
-        L_index_intermediate:
-          Value: true
-        L_index_proximal:
-          Value: true
-        L_middle_intermediate:
-          Value: true
-        L_middle_proximal:
-          Value: true
-        L_pinky_intermediate:
-          Value: true
-        L_pinky_proximal:
-          Value: true
-        L_ring_intermediate:
-          Value: true
-        L_ring_proximal:
-          Value: true
-        L_thumb_distal:
-          Value: true
-        L_thumb_intermediate:
-          Value: true
-        L_thumb_proximal:
-          Value: true
-        L_thumb_proximal_base:
-          Value: true
-        R_hand_base_link:
-          Value: true
-        R_index_intermediate:
-          Value: true
-        R_index_proximal:
-          Value: true
-        R_middle_intermediate:
-          Value: true
-        R_middle_proximal:
-          Value: true
-        R_pinky_intermediate:
-          Value: true
-        R_pinky_proximal:
-          Value: true
-        R_ring_intermediate:
-          Value: true
-        R_ring_proximal:
-          Value: true
-        R_thumb_distal:
-          Value: true
-        R_thumb_intermediate:
-          Value: true
-        R_thumb_proximal:
-          Value: true
-        R_thumb_proximal_base:
-          Value: true
         base_footprint:
           Value: true
         d435_left_imager_link:
           Value: true
         d435_rgb_module_link:
           Value: true
+        imu_link:
+          Value: true
         left_ankle_link:
           Value: true
         left_elbow_link:
-          Value: true
-        left_hand_link:
           Value: true
         left_hip_pitch_link:
           Value: true
@@ -427,8 +237,6 @@ Visualization Manager:
         right_ankle_link:
           Value: true
         right_elbow_link:
-          Value: true
-        right_hand_link:
           Value: true
         right_hip_pitch_link:
           Value: true
@@ -471,29 +279,13 @@ Visualization Manager:
                 {}
               d435_rgb_module_link:
                 {}
+              imu_link:
+                {}
               left_shoulder_pitch_link:
                 left_shoulder_roll_link:
                   left_shoulder_yaw_link:
                     left_elbow_link:
-                      left_hand_link:
-                        L_hand_base_link:
-                          L_index_proximal:
-                            L_index_intermediate:
-                              {}
-                          L_middle_proximal:
-                            L_middle_intermediate:
-                              {}
-                          L_pinky_proximal:
-                            L_pinky_intermediate:
-                              {}
-                          L_ring_proximal:
-                            L_ring_intermediate:
-                              {}
-                          L_thumb_proximal_base:
-                            L_thumb_proximal:
-                              L_thumb_intermediate:
-                                L_thumb_distal:
-                                  {}
+                      {}
               logo_link:
                 {}
               mid360_link:
@@ -502,25 +294,7 @@ Visualization Manager:
                 right_shoulder_roll_link:
                   right_shoulder_yaw_link:
                     right_elbow_link:
-                      right_hand_link:
-                        R_hand_base_link:
-                          R_index_proximal:
-                            R_index_intermediate:
-                              {}
-                          R_middle_proximal:
-                            R_middle_intermediate:
-                              {}
-                          R_pinky_proximal:
-                            R_pinky_intermediate:
-                              {}
-                          R_ring_proximal:
-                            R_ring_intermediate:
-                              {}
-                          R_thumb_proximal_base:
-                            R_thumb_proximal:
-                              R_thumb_intermediate:
-                                R_thumb_distal:
-                                  {}
+                      {}
       Update Interval: 0
       Value: true
   Enabled: true
@@ -581,10 +355,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.4503985047340393
+      Pitch: 0.24039867520332336
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz_default_plugins)
-      Yaw: 0.6103983521461487
+      Yaw: 0.8753980994224548
     Saved: ~
 Window Geometry:
   Displays:

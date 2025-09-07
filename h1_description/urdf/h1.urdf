@@ -1,16 +1,24 @@
-<!-- Copyright (c) 2016-2022 HangZhou YuShu TECHNOLOGY CO.,LTD. ("Unitree Robotics") -->
+<!-- Copyright (c) 2016-2022 HangZhou YuShu TECHNOLOGY CO.,LTD. ("Unitree Robotics") 
+Modified by Alice Zenina and Alexander Grachev RTU MIREA (Russia)-->
 
-<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (c) 2025 Alice Zenina and Alexander Grachev RTU MIREA (Russia)
+SPDX-License-Identifier: MIT
+Details in the LICENSE file in the root of the package.
+-->
+
+<!-- <?xml version="1.0" encoding="utf-8"?> -->
 <!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by
 Stephen Brawner (brawner@gmail.com) 
      Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot
   name="h1_description">
+  <!--
   <mujoco>
     <compiler meshdir="../meshes" discardvisual="false" />
   </mujoco>
-
+  -->
 
   <!-- [CAUTION] uncomment when convert to mujoco -->
   <!-- <link name="world"></link>
