@@ -39,7 +39,7 @@ def generate_launch_description():
         'robot',
         default_value='real',
         description='Choose robot: real (reading state from `/lowstate` or simulation (reading from `/positions_to_unitree`)',
-        choices=['real', 'simulation']
+        choices=['real', 'simulation', 'empty']
     )
 
     description_params = {
