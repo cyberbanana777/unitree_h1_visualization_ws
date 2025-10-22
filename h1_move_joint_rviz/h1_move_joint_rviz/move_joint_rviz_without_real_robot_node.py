@@ -84,20 +84,32 @@ class MoveJointRvizNode(Node):
             return
 
         # Process position data
-        # try:
-        pose = json.loads(data_part)
-        for i in range(len(pose) + 1):
-            if i == 6:
-                continue
-            if i != 9:
-                self.current_jpos_H1[i] = pose[str(i)]
-            else:
-                self.current_jpos_H1[i] = float(impact_part)
-
-        # except json.JSONDecodeError as e:
-        #     self.get_logger().error(f"JSON decode error: {e}")
-        # except Exception as e:
-        #     self.get_logger().error(f"Unexpected error: {e}")
+        try:
+            pose = json.loads(data_part)
+            
+            # SAFE PROCESSING: we only use existing keys
+            for key, value in pose.items():
+                try:
+                    i = int(key)
+                    # Checking the boundaries of the array
+                    if i < 0 or i >= len(self.current_jpos_H1):
+                        self.get_logger().warning(f"Joint index out of range: {i}")
+                        continue
+                        
+                    if i == 6:
+                        continue
+                    if i != 9:
+                        self.current_jpos_H1[i] = value
+                    else:
+                        self.current_jpos_H1[i] = float(impact_part)
+                        
+                except ValueError:
+                    self.get_logger().warning(f"Invalid joint key: {key}")
+                    
+        except json.JSONDecodeError as e:
+            self.get_logger().error(f"JSON decode error: {e}")
+        except Exception as e:
+            self.get_logger().error(f"Unexpected error: {e}")
 
     def timer_callback(self):
         msg = JointState()
