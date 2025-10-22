@@ -46,7 +46,7 @@
 ```bash
 mkdir -p unitree_h1_visualization_ws/src
 cd unitree_h1_visualization_ws/src
-git clone https://github.com/cyberbanana777/unitree_h1_visualization.git .
+git clone https://github.com/cyberbanana777/unitree_h1_visualization_ws.git .
 my_pwd=$(pwd)
 ```
 2. **Установить проприетарные зависимости** (по ссылкам инструкции по установке от производителя): 
@@ -78,11 +78,11 @@ grep -qxF "$line_to_add" ~/.bashrc || echo "$line_to_add" >> ~/.bashrc
 6.  **Запустить пример / основной функционал:**
 launch-файл, который запускает только ноды из этого репозитория (подробнее см. 🧪 Использование)
 ```bash
-ros2 launch completed_scripts_visualization show_and_move_h1_with_real_robot_launch.py
+ros2 launch completed_scripts_visualization show.launch.py
 ```
 или
 ```bash
-ros2 launch completed_scripts_visualization show_and_move_h1_without_real_robot_launch.py
+ros2 launch completed_scripts_visualization description.launch.py
 ```
 Launch-файлы, которые запускают всю систему целиком смотри в [unitree_h1_meta_launch_ws](https://github.com/cyberbanana777/unitree_h1_meta_launch_ws?tab=readme-ov-file#%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D0%BA-launch-%D1%84%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2)
 
@@ -117,59 +117,113 @@ ros2 run h1_move_joint_rviz move_joint_rviz_with_real_robot_node
 <p align="right" style="margin-top: 20px;"><a href="#-оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
 
 ### **Запуск launch-файлов:**
-#### Пакет `h1_description`
-##### Запуск Rviz2 (визуализатор) с настроенной конфигурацией
-```bash
-ros2 launch h1_description 
-rviz_with_config_launch.py
-```
-**Запускаемые ноды** (в формате `пакет -> зависимость`, `пакет => launch-файл`):
-- `rviz2 -> rviz2`
-##### Запуск публикации описания робота и TF-преобразования `base_footprint -> pelvis`
-В контексте описания робота, фрейм `pelvis` является аналогом стандартного `base_link`.
-```bash
-ros2 launch h1_description 
-robot_description_and_tfs_launch.py
-```
-**Запускаемые ноды** (в формате `пакет -> зависимость`, `пакет => launch-файл`):
-- `robot_state_publisher -> robot_state_publisher`
-- `tf2_ros -> static_transform_publisher`
-##### Запуск отображения робота в Rviz (визуализаторе)
-```bash
-ros2 launch h1_description 
-display_without_control_launch.py
-```
-**Запускаемые ноды** (в формате `пакет -> зависимость`, `пакет => launch-файл`):
-- `h1_description => rviz_with_config_launch.py`
-- `h1_description => robot_description_and_tfs_launch.py`
-##### Запуск отображения робота в Rviz (визуализаторе) c возможностью задать положения суставов в GUI-интерфейсе
-##### Запуск отображения робота в Rviz (визуализаторе)
-```bash
-ros2 launch h1_description 
-display_with_control_launch.py
-```
-**Запускаемые ноды** (в формате `пакет -> зависимость`, `пакет => launch-файл`):
-- `h1_description => rviz_with_config_launch.py`
-- `h1_description => robot_description_and_tfs_launch.py`
-- `joint_state_publisher_gui -> joint_state_publisher_gui`
+#### 1. Основной launch-файл `show.launch.py`
+##### Универсальный запуск с параметрами
 
-<p align="right" style="margin-top: 20px;"><a href="#оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
+```bash
+ros2 launch completed_scripts_visualization show.launch.py
+```
+Доступные параметры запуска:
+- `mode` - конфигурация робота: `with_hands` или `without_hands` (по умолчанию: `with_hands`)
+- `launch_rviz` - включение RViz: `True` или `False` (по умолчанию: `False`)
+- `launch_control_by_gui` - включение GUI управления суставами: `True` или `False` (по умолчанию: `False`)
+- `robot` - тип робота: `real` (чтение состояния из /lowstate), `simulation` (чтение из /positions_to_unitree) или `empty` (для запуска `joint_state_publisher_gui`) (по умолчанию: `real`)
 
-#### Пакет `completed_scripts_visualization`
-##### Запуск визуализации с движений реального робота
+##### Примеры использования
+Визуализация реального робота с руками:
+
 ```bash
-ros2 launch completed_scripts_visualization show_and_move_h1_with_real_robot_launch.py
+ros2 launch completed_scripts_visualization show.launch.py mode:=with_hands launch_rviz:=True robot:=real
 ```
-**Запускаемые ноды** (в формате `пакет -> зависимость`, `пакет => launch-файл`):
-- `h1_description => display_without_control_launch.py`
-- `h1_move_joint_rviz -> move_joint_rviz_with_real_robot_node`
-##### Запуск визуализации с целевых позиций робота
+
+Визуализация положения, которое робот должен принять (значения берутся из топика `/positions_to_unitree`)  робота без рук с включенным RViz:
+
 ```bash
-ros2 launch completed_scripts_visualization show_and_move_h1_without_real_robot_launch.py
+ros2 launch completed_scripts_visualization show.launch.py mode:=without_hands robot:=simulation launch_rviz:=True
 ```
-**Запускаемые ноды** (в формате `пакет -> зависимость`, `пакет => launch-файл`):
-- `h1_description => display_without_control_launch.py`
-- `h1_move_joint_rviz -> move_joint_rviz_without_real_robot_node`
+
+Визуализация с GUI управлением суставами:
+
+```bash
+ros2 launch completed_scripts_visualization show.launch.py launch_control_by_gui:=True launch_rviz:=True robot:=empty
+```
+
+##### Запускаемые ноды (в зависимости от параметров):
+
+**Всегда** запускается:
+
+`h1_description` → `description.launch.py` (включает всю визуализацию робота)
+
+При `robot:=real`:
+
+`h1_move_joint_rviz` → `move_joint_rviz_with_real_robot_node`
+
+При `robot:=simulation`:
+
+`h1_move_joint_rviz` → `move_joint_rviz_without_real_robot_node`
+
+#### 2. Базовый launch-файл `description.launch.py`
+Может быть запущен отдельно для визуализации модели робота:
+
+```bash
+ros2 launch h1_description description.launch.py
+```
+
+Доступные параметры запуска:
+- `mode` - конфигурация робота: `with_hands` или `without_hands` (по умолчанию: `with_hands`)
+- `launch_rviz` - включение RViz: `True` или `False` (по умолчанию: `False`)
+- `launch_control_by_gui` - включение GUI управления суставами: `True` или `False` (по умолчанию: `False`)
+
+##### Примеры использования
+
+Визуализация робота с руками и RViz:
+
+```bash
+ros2 launch h1_description description.launch.py mode:=with_hands launch_rviz:=True
+```
+
+Визуализация робота без рук с GUI управления суставами:
+
+```bash
+ros2 launch h1_description description.launch.py mode:=without_hands launch_control_by_gui:=True launch_rviz:=True
+```
+
+##### Запускаемые ноды (в зависимости от параметров):
+
+При `mode:=with_hands`:
+
+`robot_state_publisher` → `robot_state_publisher` (загрузка URDF h1_with_hand.urdf)
+
+При `mode:=without_hands`:
+
+`robot_state_publisher` → `robot_state_publisher` (загрузка URDF h1.urdf)
+
+При `launch_control_by_gui:=True`:
+
+`joint_state_publisher_gui` → `joint_state_publisher_gui`
+
+При `launch_rviz:=True`:
+
+`rviz2` → `rviz2` (с конфигурацией check_joint.rviz)
+
+**Всегда** запускается:
+
+`tf2_ros` → `static_transform_publisher` (преобразование между `base_footprint` и `pelvis`)
+
+#### Взаимосвязь launch-файлов:
+```text
+show.launch.py (основной)
+    │
+    └─── description.launch.py (базовая визуализация)
+    │    ├── robot_state_publisher (URDF)
+    │    ├── joint_state_publisher_gui (опционально)
+    │    ├── rviz2 (опционально)
+    │    └── static_transform_publisher
+    │
+    └─── move_joint_rviz_with_real_robot_node (для реального робота)
+    или
+    └─── move_joint_rviz_without_real_robot_node (для симуляции)
+```
 
 <p align="right" style="margin-top: 20px;"><a href="#-оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
 
@@ -232,28 +286,23 @@ ros2 launch completed_scripts_visualization show_and_move_h1_without_real_robot_
 <p align="right" style="margin-top: 20px;"><a href="#-оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
 
 ## 🗺️ Архитектура 
+> Данный раздел находится в разработке. Графы появятся позже... 😉
 Здесь представлены скрины из rqt_graph при различных запущенных сценариях.
 ### `h1_description`
-#### `rviz_with_config_launch.py` 
-![rviz_with_config_launch](docs/rviz_with_config_launch.png)
+#### `.py` 
 
-#### `robot_description_and_tfs_launch.py`
-![robot_description_and_tfs_launch](docs/robot_description_and_tfs_launch.png)
+#### `.py`
 
-#### `display_with_control_launch.py`
-![display_with_control_launch](docs/display_with_control_launch.png)
+#### `.py`
 
-#### `display_without_control_launch.py`
-![display_without_control_launch](docs/display_without_control_launch.png)
+#### `.py`
 
 <p align="right" style="margin-top: 20px;"><a href="#-оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
 
 ### `completed_scripts_visualization`
-##### `show_and_move_h1_with_real_robot_launch.py`
-![show_and_move_h1_with_real_robot_launch](docs/show_and_move_h1_with_real_robot_launch.png)
+##### `.py`
 
-##### `show_and_move_h1_without_real_robot_launch.py`
-![show_and_move_h1_without_real_robot_launch](docs/show_and_move_h1_without_real_robot_launch.png)
+##### `.py`
 
 <p align="right" style="margin-top: 20px;"><a href="#-оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
 
