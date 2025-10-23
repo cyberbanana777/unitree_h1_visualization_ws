@@ -83,19 +83,10 @@ def generate_launch_description():
         condition=IfCondition(without_hands_condition),
     )
 
-    tf2_from_base_footprint_to_pelvis = Node(
-        package='tf2_ros',
-        executable='static_transform_publisher',
-        arguments=[
-            '0.0',
-            '0.0',
-            '0.95',
-            '0.0',
-            '0.0',
-            '0.0',
-            'base_footprint',
-            'pelvis',
-        ],
+    tf2_from_base_footprint_to_pelvis_node = Node(
+            package='h1_description',
+            executable='base_footprint_transform',
+            name='base_footprint_transform',
     )
 
     gui_node = Node(
@@ -104,6 +95,8 @@ def generate_launch_description():
             name='joint_state_publisher_gui',
             condition=IfCondition(gui_condition),
     )
+
+    
     
     rviz_node = Node(
         package='rviz2',
@@ -122,7 +115,7 @@ def generate_launch_description():
 
             robot_state_publisher_with_hands_node,
             robot_state_publisher_without_hands_node,
-            tf2_from_base_footprint_to_pelvis,
+            tf2_from_base_footprint_to_pelvis_node,
             rviz_node,
             gui_node,
         ]

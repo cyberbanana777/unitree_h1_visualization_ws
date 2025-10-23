@@ -28,6 +28,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            f'base_footprint_transform = {package_name}.base_footprint_transform:main',
         ],
     },
 )

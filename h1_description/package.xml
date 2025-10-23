@@ -8,14 +8,21 @@
   <license>MIT</license>
 
   <depend>ros2launch</depend>
+  <depend>rclpy</depend>
   <depend>urdf</depend>
   <depend>xacro</depend>
   <depend>rviz2</depend>
   <depend>gazebo_ros_pkgs</depend>
   <depend>robot_state_publisher</depend>
-  <depend>joint_state_publisher</depend>
   <depend>joint_state_publisher_gui</depend>
   <depend>tf2_ros</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>tf_transformations</depend>
+
+  <depend>python3-math</depend>
+  
+  <depend>imu_converter</depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
