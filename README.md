@@ -61,7 +61,7 @@ source ~/.bashrc
 ```bash
 cd $my_pwd
 chmod +x install_dependensies.bash
-./install_dependensies.bash
+sudo ./install_dependensies.bash
 ```
 4.  **Собрать workspace:**
 ```bash
