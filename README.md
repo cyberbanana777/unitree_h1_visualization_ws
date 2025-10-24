@@ -132,6 +132,9 @@ ros2 launch completed_scripts_visualization show.launch.py
 - `launch_control_by_gui` - включение GUI управления суставами: `True` или `False` (по умолчанию: `False`)
 - `robot` - тип робота: `real` (чтение состояния из /lowstate), `simulation` (чтение из /positions_to_unitree) или `empty` (для запуска `joint_state_publisher_gui`) (по умолчанию: `real`)
 
+> 👉 Примечание:
+> Симуляция робота в rviz может отражать его положение в пространстве по показаниям с датчиков IMU, подборбнее в [этом пунте](https://github.com/cyberbanana777/unitree_h1_visualization_ws?tab=readme-ov-file#-интерфейсы-топики-сервисы-действия-параметры) документации.
+
 ##### Примеры использования
 Визуализация реального робота с руками:
 
