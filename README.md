@@ -93,7 +93,7 @@ Launch-файлы, которые запускают всю систему це�
 Что нужно для шагов "Быстрого Старта":
 *   **Поддерживаемые версии ROS2:** Foxy
 *   **Поддерживаемые платформы:** Ubuntu 20.04
-*   **Ключевые ROS2 пакеты:** `rclpy`, `std_msgs`, `sensor_msgs`, `unitree_go`, `h1_info_library` `robot_state_publisher`, `joint_state_publisher`, `joint_state_publisher_gui`, `rviz2`, `xarco`, `urdf`, `gazebo_ros_pkgs`, `tf2_ros`
+*   **Ключевые ROS2 пакеты:** `rclpy`, `std_msgs`, `sensor_msgs`, `geometry_msgs`, `unitree_go`, `h1_info_library` `robot_state_publisher`, `imu_converter`, `joint_state_publisher_gui`, `rviz2`, `xarco`, `urdf`, `gazebo_ros_pkgs`, `tf2_ros`
 
 <p align="right" style="margin-top: 20px;"><a href="#-оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
 
@@ -103,7 +103,10 @@ Launch-файлы, которые запускают всю систему це�
 
 ### **Запуск узлов:**
 #### **h1_description**
-Узлы отсутствуют
+##### Нода для публикации динамической TF-трансформации base_footprint => pelvis
+```bash
+ros2 run h1_description base_footprint_transform_node
+```
 #### **h1_move_joint_rviz**
 ##### Нода для визуализации целевых движений (можно без робота)
 ```bash
@@ -208,7 +211,7 @@ ros2 launch h1_description description.launch.py mode:=without_hands launch_cont
 
 **Всегда** запускается:
 
-`tf2_ros` → `static_transform_publisher` (преобразование между `base_footprint` и `pelvis`)
+`h1_description` → `base_footprint_transform_node` (преобразование между `base_footprint` и `pelvis`)
 
 #### Взаимосвязь launch-файлов:
 ```text
@@ -218,7 +221,7 @@ show.launch.py (основной)
     │    ├── robot_state_publisher (URDF)
     │    ├── joint_state_publisher_gui (опционально)
     │    ├── rviz2 (опционально)
-    │    └── static_transform_publisher
+    │    └── base_footprint_transform_node
     │
     └─── move_joint_rviz_with_real_robot_node (для реального робота)
     или
@@ -239,22 +242,46 @@ show.launch.py (основной)
 - **`map_range(value: float, in_min: float, in_max: float, out_min: float, out_max: float) -> float`** - функция, которая производит линейное преобразование значений из 1-ого диапазона в соответствующие им значения из 2-ого диапазона. Для корректной работы необходимы следующие аргументы:
 	- `value` - значение, которое необходимо перевести в другую систему координат (из 1-ой во 2-ую);
 	- `in_min` - наименьшее значение в 1-ом диапазоне
-	- `in_max` - наибольшее значение в 1-ом дапазоне
+	- `in_max` - наибольшее значение в 1-ом диапазоне
 	- `out_min` - наименьшее значение в 2-ом диапазоне
 	- `out_max` - наибольшее значение в 2-ом диапазоне
-	Возвращаеет значение из 2-го диапазона.
+	Возвращает значение из 2-го диапазона.
 
 <p align="right" style="margin-top: 20px;"><a href="#-оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
 
 ## 📡 Интерфейсы (топики, сервисы, действия, параметры)
 Спецификация API пакетов.
 ### **Пакет 1: `h1_description`**
-Узлы отсутствуют.
-Но в launch-файлах присутствуют ноды, которые установлены через apt-пакеты. Вот их список (формат `package -> executable`). Подробнее о их функционале читайте в интернете.
-- `robot_state_publisher -> robot_state_publisher`
-- `rviz2 -> rviz2`
-- `tf2_ros -> static_transform_publisher`
-- `joint_state_publisher_gui -> joint_state_publisher_gui`
+#### **Узел: `base_footprint_transform_node`**
+
+**ВАЖНО!!!**
+Данная нода показывает свои полные возможности при запущенной ноде-конвертере, которая переводит показания IMU из типа сообщения Unitree в стандартный тип сообщения ROS2 для IMU - `sensor_msgs/msg/Imu`. Данная нода находится является частью [другого нашего репозитория](https://github.com/cyberbanana777/unitree_h1_sensors_ws).
+При отсутствии показаний с IMU нода всё равно будет работать, поворот систем координат `base_footprint` и `pelvis` будет отсутствовать.
+
+- **Рабочие топики:**
+
+| Тип услуги | Топик                     | Тип сообщения            | Описание                                                    |
+| :--------- | :------------------------ | :----------------------- | :---------------------------------------------------------- |
+| Публикация | `/tf`                     | `tf2_msgs/msg/TFMessage` | динамическая TF-трансформация `base_footprint` → `pelvis` ) |
+| Подписка   | `/tf`                     | `tf2_msgs/msg/TFMessage` | Уже запущенные динамические TF-трансформации                |
+| Подписка   | `/tf_static`              | `tf2_msgs/msg/TFMessage` | Уже запущенные статические TF-трансформации                 |
+| Подписка   | `/sensors/imu/unitree_h1` | `sensor_msgs/msg/Imu`    | Показание IMU в корпусе робота                              |
+
+<p align="right" style="margin-top: 20px;"><a href="#-оглавление" style="text-decoration: none;">🔝 Вернуться к оглавлению</a></p>
+
+- **Параметры:**
+
+| Параметр              | Тип (знач. по умол.)                 | Описание                                                     |
+| :-------------------- | :----------------------------------- | :----------------------------------------------------------- |
+| `imu_topic`           | `string ('/sensors/imu/unitree_h1')` | Топик, из которого нода будет брать информацию `IMU`         |
+| `frequency`           | `float (30.0)`                       | Частота публикации трансформации `base_footprint` → `pelvis` |
+
+
+
+В launch-файле пакета `h1_description` присутствуют ноды, которые установлены в виде apt-пакетов. Вот их список (формат `package` → `executable`). Подробнее о их функционале читайте в интернете.
+- `robot_state_publisher` → `robot_state_publisher`
+- `rviz2` → `rviz2`
+- `joint_state_publisher_gui` → ` joint_state_publisher_gui`
 
 | Тип услуги | Топик            | Тип сообщения         | Описание                                                                                           |
 | :--------- | :--------------- | :-------------------- | :------------------------------------------------------------------------------------------------- |

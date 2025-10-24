@@ -85,8 +85,8 @@ def generate_launch_description():
 
     tf2_from_base_footprint_to_pelvis_node = Node(
             package='h1_description',
-            executable='base_footprint_transform',
-            name='base_footprint_transform',
+            executable='base_footprint_transform_node',
+            name='base_footprint_transform_node',
     )
 
     gui_node = Node(
